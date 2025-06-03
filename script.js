@@ -73,6 +73,30 @@ class HashMap {
     this.load = 0;
     this.capacity = 16;
   }
+  keys() {
+    let indexArr = [];
+    this.array.forEach((element) => {
+      indexArr.push(this.array.indexOf(element));
+    });
+    return indexArr;
+  }
+  values() {
+    let valuesArr = [];
+    this.array.forEach((element) => {
+      valuesArr.push(element);
+    });
+    return JSON.stringify(valuesArr);
+  }
+  entries() {
+    let valuesWithObjArr = [];
+    this.array.forEach((element) => {
+      valuesWithObjArr.push([
+        this.array.indexOf(element),
+        `${element.firstName} ${element.lastName}`,
+      ]);
+    });
+    return valuesWithObjArr;
+  }
 }
 
 function hash(person) {
@@ -119,5 +143,4 @@ for (let i = 0; i < personArr.length; i++) {
 }
 
 console.log(map);
-map.clear();
-console.log(map);
+console.log(map.entries());
