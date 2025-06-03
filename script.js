@@ -1,5 +1,83 @@
-console.log("Hello");
+class Person {
+  constructor(firstName, lastName) {
+    this.firstName;
+    this.lastName;
+  }
+}
 
-let test = 1;
+class HashMap {
+  //hashmap
+  constructor() {
+    this.load = 0;
+    this.capacity = 16;
+    this.array = [];
+  }
+  set(key, value) {
+    let index = key;
+    if (index < 0 || index >= this.capacity) {
+      //space limitation
+      throw new Error("Trying to access index out of bounds");
+    }
+    if (!this.array[index]) {
+      //is array is not occupied
+      this.array[index] = value;
+      this.load++;
+    } else {
+      if (
+        //if the values at the same index are the same
+        this.array[index].firstName === value.firstName &&
+        this.array[index].lastName === value.lastName
+      ) {
+        return;
+      }
+      this.array[index].nextPerson = value;
+    }
+    if (this.load === Math.ceil(this.capacity - (this.capacity / 100) * 20)) {
+      this.capacity *= 2;
+    }
+  }
+}
 
-export { test };
+function hash(person) {
+  let key = person.lastName;
+  //hashing function
+  let hashCode = 0;
+  const primeNumber = 31;
+  for (let i = 0; i < key.length; i++) {
+    hashCode = primeNumber * hashCode + key.charCodeAt(i);
+  }
+  hashCode %= 16; //to reduce the hashcode to fit our array of 16
+  console.log(person.lastName, hashCode);
+  map.set(hashCode, person);
+}
+
+//testing zone ------------------------------
+
+let map = new HashMap();
+
+let personArr = [
+  { firstName: "Patrick", lastName: "Brochu" },
+  { firstName: "Patrick", lastName: "Brochu" },
+  { firstName: "Delphine", lastName: "Henri" },
+  { firstName: "Francois", lastName: "Medina" },
+  { firstName: "Michel", lastName: "Brochu" },
+  { firstName: "Maria", lastName: "Jinnie" },
+  { firstName: "Robert", lastName: "California" },
+  { firstName: "Michel", lastName: "Scott" },
+  { firstName: "Jim", lastName: "Halpert" },
+  { firstName: "Dwight", lastName: "Shroute" },
+  { firstName: "Angela", lastName: "Nata" },
+  { firstName: "Eddie", lastName: "Hall" },
+  { firstName: "Light", lastName: "Yagami" },
+  { firstName: "Near", lastName: "Lawliet" },
+  { firstName: "Miheel", lastName: "Niel" },
+  { firstName: "Misa", lastName: "Amane" },
+  { firstName: "Mira", lastName: "Totoro" },
+  { firstName: "Misao", lastName: "Atatas" },
+  { firstName: "Akura", lastName: "Atame" },
+];
+
+for (let i = 0; i < personArr.length; i++) {
+  hash(personArr[i]);
+}
+console.log(map);
