@@ -127,11 +127,93 @@ describe("remove() function test unit", () => {
     let load = map.load;
     let substractCounter = 1;
     map.array.forEach((element) => {
-      console.log(map.load, load, substractCounter);
+      let indexOfElement = map.array.indexOf(element);
       map.remove(map.array.indexOf(element));
       expect(map.load).toBe(load - substractCounter);
+      expect(map.array[indexOfElement]).toBeUndefined();
       substractCounter++;
     });
-    console.log(map);
+  });
+});
+describe("length() function test unit", () => {
+  test("Return the right length", () => {
+    for (let i = 0; i < personArr.length; i++) {
+      map.set(personArr[i].firstName, personArr[i].lastName);
+    }
+    let length = 0;
+    map.array.forEach(() => {
+      length++;
+    });
+    expect(map.length()).toBe(length);
+  });
+});
+describe("clear() function test unit", () => {
+  test("Successfully clears the hash map and reset load", () => {
+    for (let i = 0; i < personArr.length; i++) {
+      map.set(personArr[i].firstName, personArr[i].lastName);
+    }
+    let isEmptyMock = jest.fn(() => {
+      {
+        let isEmpty = true;
+        for (let i = 0; i < map.array.length; i++) {
+          if (map.array[i]) {
+            return false;
+          }
+        }
+        return isEmpty;
+      }
+    });
+    map.clear();
+    expect(isEmptyMock()).toBeTruthy();
+    expect(map.load).toBe(0);
+  });
+});
+describe("keys() function test unit", () => {
+  test("Returns an empty array if no data is in the hashmap", () => {
+    expect(map.keys()).toEqual([]);
+  });
+  test("Verify that returned keys fits the occupied keys in array", () => {
+    for (let i = 0; i < personArr.length; i++) {
+      map.set(personArr[i].firstName, personArr[i].lastName);
+    }
+    let mapArr = [];
+    map.array.forEach((element) => {
+      mapArr.push(map.array.indexOf(element));
+    });
+    expect(map.keys()).toEqual(mapArr);
+  });
+});
+describe("values() function test unit", () => {
+  test("Returns an empty array if no data is in the hashmap", () => {
+    expect(map.values()).toEqual([]);
+  });
+  test("Returns accurately the array of every values in the hash map", () => {
+    for (let i = 0; i < personArr.length; i++) {
+      map.set(personArr[i].firstName, personArr[i].lastName);
+    }
+    let mapArr = [];
+    map.array.forEach((element) => {
+      mapArr.push(element);
+    });
+    expect(map.values()).toEqual(JSON.stringify(mapArr));
+  });
+});
+describe("entries() function test unit", () => {
+  test("Returns empty array if no data populate the hash map", () => {
+    expect(map.entries()).toEqual([]);
+  });
+  test("Returns array that accurately contains an array of key, value pair", () => {
+    for (let i = 0; i < personArr.length; i++) {
+      map.set(personArr[i].firstName, personArr[i].lastName);
+    }
+    let keyValueArr = [];
+    map.array.forEach((element) => {
+      let pairArr = [
+        map.array.indexOf(element),
+        `${element.firstName} ${element.lastName}`,
+      ];
+      keyValueArr.push(pairArr);
+    });
+    expect(map.entries()).toEqual(keyValueArr);
   });
 });

@@ -86,6 +86,9 @@ class HashMap {
   }
   values() {
     let valuesArr = [];
+    if (this.array.length <= 1) {
+      return valuesArr;
+    }
     this.array.forEach((element) => {
       valuesArr.push(element);
     });
@@ -93,6 +96,9 @@ class HashMap {
   }
   entries() {
     let valuesWithObjArr = [];
+    if (this.array.length <= 1) {
+      return valuesWithObjArr;
+    }
     this.array.forEach((element) => {
       valuesWithObjArr.push([
         this.array.indexOf(element),
@@ -117,6 +123,5 @@ function hash(lastName) {
 //testing zone ------------------------------
 
 let map = new HashMap();
-console.log(map);
 
 export { map, hash };
