@@ -12,15 +12,16 @@ class HashMap {
     this.capacity = 16;
     this.array = [];
   }
-  set(key, value) {
-    let index = key;
+  set(value, key) {
+    let person = { firstName: value, lastName: key }; //change the key/value into an object
+    let index = hash(key);
     if (index < 0 || index >= this.capacity) {
       //space limitation
       throw new Error("Trying to access index out of bounds");
     }
     if (!this.array[index]) {
       //is array is not occupied
-      this.array[index] = value;
+      this.array[index] = person;
       this.load++;
     } else {
       if (
@@ -34,11 +35,14 @@ class HashMap {
     }
     if (this.load === Math.ceil(this.capacity - (this.capacity / 100) * 20)) {
       this.capacity *= 2;
-      let arrHolder = this.array;
+      let arrHolder = [];
+      this.array.forEach((element) => {
+        arrHolder.push(element);
+      });
       this.array = [];
       arrHolder.forEach((element) => {
         //need to rehash every value with new capacity modulo
-        hash(element);
+        map.set(element.firstName, element.lastName);
       });
     }
   }
@@ -99,16 +103,15 @@ class HashMap {
   }
 }
 
-function hash(person) {
-  let key = person.lastName;
+function hash(lastName) {
   //hashing function
   let hashCode = 0;
   const primeNumber = 31;
-  for (let i = 0; i < key.length; i++) {
-    hashCode = primeNumber * hashCode + key.charCodeAt(i);
+  for (let i = 0; i < lastName.length; i++) {
+    hashCode = primeNumber * hashCode + lastName.charCodeAt(i);
   }
   hashCode %= map.capacity; //to reduce the hashcode to fit our array of 16
-  map.set(hashCode, person);
+  return hashCode;
 }
 
 //testing zone ------------------------------
@@ -139,8 +142,9 @@ let personArr = [
 ];
 
 for (let i = 0; i < personArr.length; i++) {
-  hash(personArr[i]);
+  map.set(personArr[i].firstName, personArr[i].lastName);
 }
 
 console.log(map);
-console.log(map.entries());
+map.set("Bob", "Noris");
+console.log(map);
