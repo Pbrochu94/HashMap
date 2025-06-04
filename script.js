@@ -31,7 +31,7 @@ class HashMap {
       ) {
         return;
       }
-      this.array[index].nextPerson = value;
+      this.array[index].nextPerson = person;
     }
     if (this.load === Math.ceil(this.capacity - (this.capacity / 100) * 20)) {
       this.capacity *= 2;
@@ -117,34 +117,6 @@ function hash(lastName) {
 //testing zone ------------------------------
 
 let map = new HashMap();
-
-let personArr = [
-  { firstName: "Patrick", lastName: "Brochu" },
-  { firstName: "Patrick", lastName: "Brochu" },
-  { firstName: "Delphine", lastName: "Henri" },
-  { firstName: "Francois", lastName: "Medina" },
-  { firstName: "Michel", lastName: "Brochu" },
-  { firstName: "Maria", lastName: "Jinnie" },
-  { firstName: "Robert", lastName: "California" },
-  { firstName: "Michel", lastName: "Scott" },
-  { firstName: "Jim", lastName: "Halpert" },
-  { firstName: "Dwight", lastName: "Shroute" },
-  { firstName: "Angela", lastName: "Nata" },
-  { firstName: "Eddie", lastName: "Hall" },
-  { firstName: "Light", lastName: "Yagami" },
-  { firstName: "Near", lastName: "Lawliet" },
-  { firstName: "Miheel", lastName: "Niel" },
-  { firstName: "Misa", lastName: "Amane" },
-  { firstName: "Mira", lastName: "Totoro" },
-  { firstName: "Misao", lastName: "Atatas" },
-  { firstName: "Akura", lastName: "Atame" },
-  { firstName: "Patrick", lastName: "Brochu" },
-];
-
-for (let i = 0; i < personArr.length; i++) {
-  map.set(personArr[i].firstName, personArr[i].lastName);
-}
-
 console.log(map);
-map.set("Bob", "Noris");
-console.log(map);
+
+export { map, hash };
